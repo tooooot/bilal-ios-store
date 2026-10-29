@@ -7,5 +7,5 @@
 <body>
 <main id="app"></main>
 <nav id="nav"><button data-t="home" class="on"><img src="kit2/T1.webp" alt="">الرئيسية</button><button data-t="qib"><img src="kit2/T2.webp" alt="">القبلة</button><button data-t="ram"><img src="kit2/T3.webp" alt="">رمضان</button><button data-t="mus"><img src="kit2/T5.webp" alt="" style="border-radius:12px">مستشاري</button><button data-t="set"><img src="kit2/T4.webp" alt="">الإعدادات</button></nav>
-<script src="adhan.js"></script><script src="calc.js"></script><script src="i18n.js"></script><script src="app.js"></script><script>I18N.start()</script>
+<script src="adhan.js"></script><script src="calc.js"></script><script>try{var l=localStorage.getItem("bilal_lang");if(!l){l=(navigator.language||"").slice(0,2).toLowerCase()}if(/^[a-z]{2}$/.test(l)&&"tr fa ms fr ru zh sw ha ps so de es ku uz sq".split(" ").indexOf(l)>=0)document.write("<script src=\"lang/"+l+".js\"><\/script>")}catch(e){}</script><script src="i18n.js"></script><script src="app.js"></script><script>I18N.start()</script>
 </body></html>

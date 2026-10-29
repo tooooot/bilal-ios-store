@@ -4,13 +4,19 @@
   else root.BilalCalc = factory(root.adhan);
 })(typeof self !== 'undefined' ? self : this, function (adhan) {
   const KEYS = {mwl:'MuslimWorldLeague', egypt:'Egyptian', karachi:'Karachi', makkah:'UmmAlQura', dubai:'Dubai', moonsighting:'MoonsightingCommittee',
-    isna:'NorthAmerica', kuwait:'Kuwait', qatar:'Qatar', singapore:'Singapore', tehran:'Tehran', turkey:'Turkey'};
+    isna:'NorthAmerica', kuwait:'Kuwait', qatar:'Qatar', singapore:'Singapore', tehran:'Tehran', turkey:'Turkey', jakim:'Other', kemenag:'Other'};
+  // طرق مضبوطة على جداول الجهات الرسمية (زوايا + احتياط بالدقائق لكل صلاة، تقريب لأقرب دقيقة): قيس خطؤها على بياناتها (انظر CONSTITUTION)
+  const CUSTOM = {
+    jakim:   {fa:17.5, ia:18, adj:{fajr:-0.5, sunrise:-0.5, dhuhr:2.5, asr:1.5, maghrib:1.5, isha:1.5}},   // JAKIM ماليزيا (متوسط 4 مناطق 2026)
+    kemenag: {fa:20,   ia:18, adj:{fajr:2.5,  sunrise:-3,   dhuhr:3.5, asr:2.5, maghrib:3,   isha:2.5}},   // وزارة الشؤون الدينية إندونيسيا (5 مدن 2026)
+    turkey:  {fa:18,   ia:16, adj:{fajr:0,    sunrise:-7,   dhuhr:5,   asr:5,   maghrib:7.5, isha:6}}      // ديانت تركيا (4 مدن، شهر واحد فقط — يُعاد ضبطها)
+  };
   const LABEL = {mwl:'رابطة العالم الإسلامي', egypt:'الهيئة المصرية العامة للمساحة', karachi:'جامعة العلوم الإسلامية بكراتشي', makkah:'أم القرى (مكة المكرمة)',
-    dubai:'دبي', moonsighting:'لجنة رؤية الهلال', isna:'أمريكا الشمالية (ISNA)', kuwait:'الكويت', qatar:'قطر', singapore:'سنغافورة / ماليزيا / إندونيسيا',
-    tehran:'جامعة طهران', turkey:'ديانت تركيا'};
+    dubai:'دبي', moonsighting:'لجنة رؤية الهلال', isna:'أمريكا الشمالية (ISNA)', kuwait:'الكويت', qatar:'قطر', singapore:'سنغافورة / بروناي',
+    tehran:'جامعة طهران', turkey:'ديانت تركيا', jakim:'جاكيم (ماليزيا)', kemenag:'وزارة الشؤون الدينية (إندونيسيا)'};
   const TZ = {'Asia/Riyadh':'makkah','Asia/Kuwait':'kuwait','Asia/Qatar':'qatar','Asia/Dubai':'dubai','Africa/Cairo':'egypt','Europe/Istanbul':'turkey',
-    'Asia/Karachi':'karachi','Asia/Kolkata':'karachi','Asia/Calcutta':'karachi','Asia/Dhaka':'karachi','Asia/Singapore':'singapore','Asia/Kuala_Lumpur':'singapore',
-    'Asia/Jakarta':'singapore','Asia/Brunei':'singapore','Asia/Tehran':'tehran','Pacific/Honolulu':'isna'};
+    'Asia/Karachi':'karachi','Asia/Kolkata':'karachi','Asia/Calcutta':'karachi','Asia/Dhaka':'karachi','Asia/Singapore':'singapore','Asia/Kuala_Lumpur':'jakim','Asia/Kuching':'jakim',
+    'Asia/Jakarta':'kemenag','Asia/Makassar':'kemenag','Asia/Pontianak':'kemenag','Asia/Jayapura':'kemenag','Asia/Brunei':'singapore','Asia/Tehran':'tehran','Pacific/Honolulu':'isna'};
   /** الطريقة الافتراضية بحسب منطقة الجهاز الزمنية — يستطيع المستخدم تغييرها دائماً */
   function autoMethod(tz) {
     if (TZ[tz]) return TZ[tz];
@@ -46,12 +52,16 @@
     opts = opts || {};
     const method = (!opts.method || opts.method === 'auto') ? autoMethod(opts.tz || Intl.DateTimeFormat().resolvedOptions().timeZone) : opts.method;
     const coords = new adhan.Coordinates(lat, lon);
-    const params = adhan.CalculationMethod[KEYS[method] || 'MuslimWorldLeague']();
+    const cu = CUSTOM[method];
+    const params = cu ? new adhan.CalculationParameters('Other', cu.fa, cu.ia) : adhan.CalculationMethod[KEYS[method] || 'MuslimWorldLeague']();
+    if (cu) params.rounding = adhan.Rounding.None;
     params.madhab = opts.asr === 'hanafi' ? adhan.Madhab.Hanafi : adhan.Madhab.Shafi;
     params.highLatitudeRule = adhan.HighLatitudeRule.recommended(coords);
     const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
     if (method === 'makkah') params.rounding = adhan.Rounding.None;
     const p = new adhan.PrayerTimes(coords, noon, params);
+    if (cu) for (const k of ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'])
+      p[k] = new Date(Math.round((p[k].getTime() + cu.adj[k] * 6e4) / 6e4) * 6e4);
     if (method === 'makkah') {   // الجدول الرسمي (KACST): تصحيح موسمي ثم قصّ للدقيقة؛ يطابق الرسمي ~95% والباقي بدقيقة (اختبار 8 مدن × 6 سنوات)
       for (const k of ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'])
         p[k] = new Date(Math.floor((p[k].getTime() + uqCorr(k, noon, lat) * 1000) / 6e4) * 6e4);

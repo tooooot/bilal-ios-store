@@ -3,11 +3,17 @@
 // الطريقة: الواجهة مكتوبة بالعربية، وهذا الملف يترجم عقد النص بعد رسمها (تطابق تام ← أنماط ← مقاطع قصيرة). لا يمسّ منطق التطبيق.
 (function(){
 const LANGS=[['ar','العربية','rtl','ar-SA-u-nu-latn'],['en','English','ltr','en-US'],['ur','اردو','rtl','ur-PK-u-nu-latn'],['bn','বাংলা','ltr','bn-BD-u-nu-latn'],
-  ['id','Bahasa Indonesia','ltr','id-ID'],['tl','Filipino','ltr','fil-PH'],['hi','हिन्दी','ltr','hi-IN-u-nu-latn']];
+  ['id','Bahasa Indonesia','ltr','id-ID'],['tl','Filipino','ltr','fil-PH'],['hi','हिन्दी','ltr','hi-IN-u-nu-latn'],
+  ['tr','Türkçe','ltr','tr-TR'],['fa','فارسی','rtl','fa-IR-u-nu-latn'],['ms','Bahasa Melayu','ltr','ms-MY'],['fr','Français','ltr','fr-FR'],['ru','Русский','ltr','ru-RU'],
+  ['zh','中文','ltr','zh-CN'],['sw','Kiswahili','ltr','sw-KE'],['ha','Hausa','ltr','ha-NG'],['ps','پښتو','rtl','ps-AF-u-nu-latn'],['so','Soomaali','ltr','so-SO'],
+  ['de','Deutsch','ltr','de-DE'],['es','Español','ltr','es-ES'],['ku','Kurdî','ltr','ku-TR'],['uz','Oʻzbekcha','ltr','uz-UZ'],['sq','Shqip','ltr','sq-AL']];
+const EXTL=['tr','fa','ms','fr','ru','zh','sw','ha','ps','so','de','es','ku','uz','sq'];   // لغات كل منها في ملف lang/xx.js يُحمَّل عند اختيارها
 const IDX={en:1,ur:2,bn:3,id:4,tl:5,hi:6};
 let cur='ar';
 try{ const s=localStorage.getItem('bilal_lang'); if(s&&LANGS.some(l=>l[0]===s)) cur=s;
   else { const n=(navigator.language||'ar').slice(0,2).toLowerCase(); const m={fi:'tl',fil:'tl'}[n]||n; if(LANGS.some(l=>l[0]===m)) cur=m; } }catch(_){}
+const EXT=(window.BILAL_L||{})[cur];
+if(EXTL.indexOf(cur)>=0&&!EXT) cur='ar';   // ملف اللغة غير موجود: نعرض العربية بدل «undefined»
 const meta=LANGS.find(l=>l[0]===cur);
 document.documentElement.lang=cur; document.documentElement.dir=meta[2]; document.documentElement.dataset.l=cur;
 
@@ -208,7 +214,9 @@ const F=[
 ['أم القرى (مكة المكرمة)','Umm al-Qura (Makkah)','اُم القریٰ (مکہ مکرمہ)','উম্মুল কুরা (মক্কা)','Umm al-Qura (Makkah)','Umm al-Qura (Makkah)','उम्मुल क़ुरा (मक्का)'],
 ['لجنة رؤية الهلال','Moonsighting Committee','رویتِ ہلال کمیٹی','চাঁদ দেখা কমিটি','Komite Rukyat Hilal','Moonsighting Committee','चाँद देखने की समिति'],
 ['أمريكا الشمالية','North America','شمالی امریکہ','উত্তর আমেরিকা','Amerika Utara','North America','उत्तरी अमेरिका'],['قطر','Qatar','قطر','কাতার','Qatar','Qatar','क़तर'],
-['سنغافورة / ماليزيا / إندونيسيا','Singapore / Malaysia / Indonesia','سنگاپور / ملائیشیا / انڈونیشیا','সিঙ্গাপুর / মালয়েশিয়া / ইন্দোনেশিয়া','Singapura / Malaysia / Indonesia','Singapore / Malaysia / Indonesia','सिंगापुर / मलेशिया / इंडोनेशिया'],
+['سنغافورة / بروناي','Singapore / Brunei','سنگاپور / برونائی','সিঙ্গাপুর / ব্রুনেই','Singapura / Brunei','Singapore / Brunei','सिंगापुर / ब्रुनेई'],
+['جاكيم (ماليزيا)','JAKIM (Malaysia)','جاکِم (ملائیشیا)','জাকিম (মালয়েশিয়া)','JAKIM (Malaysia)','JAKIM (Malaysia)','जाकिम (मलेशिया)'],
+['وزارة الشؤون الدينية (إندونيسيا)','Ministry of Religious Affairs (Indonesia)','وزارتِ مذہبی امور (انڈونیشیا)','ধর্ম মন্ত্রণালয় (ইন্দোনেশিয়া)','Kementerian Agama (Indonesia)','Ministry of Religious Affairs (Indonesia)','धार्मिक मामलों का मंत्रालय (इंडोनेशिया)'],
 ['جامعة طهران','University of Tehran','جامعہ تہران','তেহরান বিশ্ববিদ্যালয়','Universitas Teheran','University of Tehran','तेहरान विश्वविद्यालय'],['ديانت تركيا','Diyanet (Turkey)','دیانت ترکی','দিয়ানেত (তুরস্ক)','Diyanet (Turki)','Diyanet (Turkey)','दियानत (तुर्की)'],
 ];
 // نصوص الإشعار وشاشة الأذان الأصلية (جافا) — {n} = اسم الصلاة
@@ -219,11 +227,13 @@ const UI={ar:{now:'حان وقت {n}',close:'إغلاق',test:'تجربة الأ
  id:{now:'Waktunya {n}',close:'Tutup',test:'Uji adzan',open:'Ketuk untuk membuka layar adzan',hint:'Ketuk Tutup untuk mengakhiri adzan'},
  tl:{now:'Oras na ng {n}',close:'Isara',test:'Pagsubok ng adhan',open:'I-tap para buksan ang adhan screen',hint:'I-tap ang Isara para tapusin ang adhan'},
  hi:{now:'{n} का समय हो गया',close:'बंद करें',test:'अज़ान टेस्ट',open:'अज़ान स्क्रीन खोलने के लिए टैप करें',hint:'अज़ान ख़त्म करने के लिए बंद करें दबाएँ'}};
+// دمج لغة خارجية: عمود إضافي (7) في الصفوف نفسها، فيبقى المحرك كما هو
+if(EXT){ X.forEach((r,i)=>{ r[7]=EXT.x[i]; }); P.forEach((r,i)=>{ r[7]=EXT.p[i]; }); F.forEach((r,i)=>{ r[7]=EXT.f[i]; }); UI[cur]=EXT.ui; }
 // ——— المحرّك ———
 const norm=s=>s.replace(/\s+/g,' ').trim();
 const MAP=new Map(); X.forEach(r=>MAP.set(norm(r[0]),r));
 const FR=F.slice().sort((a,b)=>b[0].length-a[0].length);
-const ix=IDX[cur];
+const ix=EXT?7:IDX[cur];
 const AR=/[؀-ۿ]/;
 function tr(s){
   if(cur==='ar'||!s||!AR.test(s)) return s;
