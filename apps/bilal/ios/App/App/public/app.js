@@ -12,7 +12,7 @@ const LIB=[{id:'haram',n:'أذان الحرم المكي',lic:'CC BY 3.0',full:1
  {id:'sabah',n:'صباح فخري — مقام شامي',lic:'ملكية عامة',full:1,tk:1},{id:'aishatu',n:'تكبير ختامي (Aishatu98)',lic:'CC0',full:0,tk:1},
  ];
 const DEF = {loc:{name:'مكة المكرمة',lat:21.4225,lon:39.8262,auto:false}, adhan:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1}, sound:'takbir_haram',
-  silent:20, ramAdj:0, imsak:10, theme:'light', wbg:'', wfg:'', wacc:'', walpha:0, imsakAlert:1, boost:1, method:'auto', asr:'shafi', fajrSound:''};
+  silent:20, ramAdj:0, imsak:10, theme:'light', wbg:'', wfg:'', wacc:'', walpha:0, imsakAlert:1, boost:1, method:'auto', asr:'shafi'};
 let S = Object.assign({}, DEF, JSON.parse(localStorage.getItem('bilal')||'{}'));
 if(!/^(takbir|adhan)_(haram|aaqib|adam|sabah|aishatu|m\d+)$/.test(S.sound)) S.sound='takbir_haram';
 if(!localStorage.getItem('bilal_h1')){ localStorage.setItem('bilal_h1','1'); if(S.sound==='takbir_aaqib') S.sound='takbir_haram'; }   // الحرم صار الافتراضي   // ترحيل الأصوات القديمة
@@ -44,9 +44,7 @@ function schedule(days=60){
   return items.sort((a,b)=>a.t-b.t);
 }
 function nextPrayer(){ const now=Date.now(); return schedule(3).find(x=>x.k==='p' && x.t>now); }
-/** صوت الفجر: أذان فيه «الصلاة خير من النوم» إن توفّر في هذه النسخة (المختار، وإلا أول متاح)، وإلا الصوت العام */
-function fajrSnd(){ const a=LIB.filter(l=>l.fj); if(!a.length) return ''; const l=a.find(x=>x.id===S.fajrSound)||(S.fajrSound==='none'?null:a[0]); return l?'adhan_'+l.id:''; }
-async function push(){ if (!Bilal) return; try { if (Bilal.setUi) await Bilal.setUi(I18N.ui).catch(()=>{}); await Bilal.schedule({items:schedule(60), sound:S.sound, fajrSound:fajrSnd(), theme:S.theme, boost:!!S.boost, wbg:S.wbg||'', wfg:S.wfg||'', wacc:S.wacc||'', walpha:S.walpha||-1}); } catch(e){} }
+async function push(){ if (!Bilal) return; try { if (Bilal.setUi) await Bilal.setUi(I18N.ui).catch(()=>{}); await Bilal.schedule({items:schedule(60), sound:S.sound, theme:S.theme, boost:!!S.boost, wbg:S.wbg||'', wfg:S.wfg||'', wacc:S.wacc||'', walpha:S.walpha||-1}); } catch(e){} }
 
 // ——— الواجهة ———
 const ACC=['#e0b45a','#2f9e6f','#3b82c4','#c0392b','#8e5bc4','#e08a2c'];
@@ -195,12 +193,9 @@ function settings(){
   <details class="sec" data-s="الأذان" ${openSec.has('الأذان')?'open':''}><summary>الأذان</summary><div class="card">${sw('fajr','الفجر')}${sw('dhuhr','الظهر')}${sw('asr','العصر')}${sw('maghrib','المغرب')}${sw('isha','العشاء')}
    <div class="row"><span>المؤذن<small>الأصوات من مكتبة حرّة الترخيص</small></span><select id="mu">${LIB.map(l=>`<option value="${l.id}" ${S.sound.endsWith('_'+l.id)?'selected':''}>${l.n}</option>`).join('')}</select></div>
    <div class="row"><span>النوع<small>تكبيرتان «الله أكبر الله أكبر» فقط، أو الأذان كاملاً</small></span><select id="mk"><option value="takbir" ${S.sound.startsWith('takbir')?'selected':''} ${(LIB.find(l=>S.sound.endsWith('_'+l.id))||{}).tk?'':'disabled'}>تكبيرتان فقط</option><option value="adhan" ${S.sound.startsWith('adhan')?'selected':''} ${(LIB.find(l=>S.sound.endsWith('_'+l.id))||{}).full?'':'disabled'}>الأذان كاملاً</option></select></div>
-   ${LIB.some(l=>l.fj)?`<div class="row"><span>أذان الفجر<small>فيه «الصلاة خير من النوم» بدل التكبير فقط</small></span><select id="fj">${LIB.filter(l=>l.fj).map(l=>`<option value="${l.id}" ${fajrSnd()==='adhan_'+l.id?'selected':''}>${l.n}</option>`).join('')}<option value="none" ${S.fajrSound==='none'?'selected':''}>نفس المؤذن أعلاه</option></select></div>`:''}
    <div class="row" id="boostT"><span>رفع الصوت تلقائياً<small>إن كان صوت المنبّه منخفضاً جداً فيفوتك الأذان</small></span>${toggle(S.boost)}</div>
    <div class="row"><span>جرّب الصوت</span><span><button class="btn" id="prev">تشغيل</button> <button class="btn sec" id="stop">إيقاف</button></span></div>
-   <div class="row" style="display:block"><span>اختبار الأذان الفعلي<small>يشغّل الأذان بالمسار نفسه الذي يعمل وقت الصلاة (إشعار + شاشة كاملة). اختر التأخير ثم اقفل الجوال أو اتركه لتجرّب الحالتين.</small></span>
-    <div style="margin:8px 0"><select id="tdelay"><option value="0">فوراً</option><option value="15" selected>بعد 15 ثانية</option><option value="60">بعد دقيقة</option><option value="-1">في الساعة المحدّدة ↓</option></select> <input type="time" id="tclock" style="margin-inline-start:8px"></div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px">${['fajr','dhuhr','asr','maghrib','isha'].map(k=>`<button class="btn sec" data-test="${k}">${NAMES[k]}</button>`).join('')}</div></div></div>
+  </div>
   <details class="sec" data-s="الصامت وقت الصلاة" ${openSec.has('الصامت وقت الصلاة')?'open':''}><summary>الصامت وقت الصلاة</summary><div class="card"><div class="row"><span>تحويل الجوال لصامت لمدة<small>يسمح بالمنبّهات فقط، ثم يعود لوضعه السابق</small></span>
    <select id="silent">${opts([[0,'بدون'],[10,'10 دقائق'],[15,'15 دقيقة'],[20,'20 دقيقة'],[30,'30 دقيقة'],[45,'45 دقيقة']],S.silent)}</select></div></div></details>
   <details class="sec" data-s="رمضان" ${openSec.has('رمضان')?'open':''}><summary>رمضان</summary><div class="card">
@@ -255,14 +250,11 @@ function bind(){
   on('#method','onchange',async e=>{S.method=e.target.value;save();await push();render();});
   on('#asr','onchange',async e=>{S.asr=e.target.value;save();await push();render();});
   const setSnd=async(id,kind)=>{ const l=LIB.find(x=>x.id===id)||LIB[0]; if(!l.full) kind='takbir'; if(!l.tk) kind='adhan'; S.sound=kind+'_'+l.id; save(); await push(); render(); };
-  on('#fj','onchange',async e=>{S.fajrSound=e.target.value;save();await push();});
   on('#mu','onchange',e=>setSnd(e.target.value,S.sound.split('_')[0])); on('#mk','onchange',e=>setSnd(S.sound.split('_')[1],e.target.value));
   on('#silent','onchange',async e=>{S.silent=+e.target.value;save();await push();await refreshStatus();render();});
   on('#imsak','onchange',async e=>{S.imsak=+e.target.value;save();await push();});
   on('#ramAdj','onchange',async e=>{S.ramAdj=+e.target.value;save();await push();});
   on('#prev','onclick',()=>Bilal&&Bilal.preview({sound:S.sound})); on('#stop','onclick',()=>Bilal&&Bilal.stop());
-  const atTime=()=>{ if(+($('#tdelay').value)!==-1) return 0; const v=$('#tclock').value; if(!v) return 0; const [h,m]=v.split(':').map(Number); const d=new Date(); d.setHours(h,m,0,0); if(d.getTime()<=Date.now()) d.setDate(d.getDate()+1); return d.getTime(); };
-  document.querySelectorAll('[data-test]').forEach(b=>b.onclick=async()=>{ if(!Bilal)return; const k=b.dataset.test; await Bilal.testAlarm({n:k,label:I18N.tr(NAMES[k]),delay:Math.max(0,+($('#tdelay').value||0)),at:atTime(),sound:S.sound}); b.textContent='✓ '+NAMES[k]; setTimeout(()=>{b.textContent=NAMES[k]},3000); });
   on('#lang','onchange',e=>I18N.set(e.target.value));
   on('#gps','onclick',locate);
   on('#mus','onclick',()=>Bilal&&Bilal.openApp({package:'net.wardyat.mustashari',url:'https://mustashari.wardyat.net'}));
