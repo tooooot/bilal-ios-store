@@ -1,0 +1,14 @@
+{
+	"appId": "net.wardyat.bilal",
+	"appName": "أذان بلال",
+	"webDir": "www",
+	"android": {
+		"includePlugins": []
+	},
+	"ios": {
+		"includePlugins": [],
+		"contentInset": "always",
+		"backgroundColor": "#120d08"
+	},
+	"packageClassList": []
+}

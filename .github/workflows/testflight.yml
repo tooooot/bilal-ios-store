@@ -1,0 +1,57 @@
+name: iOS → TestFlight
+
+# Needs an active Apple Developer membership and these repo secrets:
+# ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 (contents of the .p8), APPLE_TEAM_ID
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        type: choice
+        options: [bilal]
+      upload:
+        description: 'Upload to App Store Connect (needs the app record created first). Off = build only.'
+        type: boolean
+        default: true
+      marketing_version:
+        description: 'Version shown in the store (e.g. 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  build-upload:
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      PROJECT: apps/${{ inputs.app }}/ios/App/App.xcodeproj
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Install App Store Connect API key
+        run: |
+          mkdir -p ~/private_keys
+          echo "${{ secrets.ASC_KEY_P8 }}" > ~/private_keys/AuthKey_${ASC_KEY_ID}.p8
+          sed -i '' "s/__TEAM_ID__/${TEAM_ID}/" ci/ExportOptions.plist
+      - name: Archive
+        run: |
+          xcodebuild -project "$PROJECT" -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}" MARKETING_VERSION="${{ inputs.marketing_version }}" \
+            -allowProvisioningUpdates -authenticationKeyPath ~/private_keys/AuthKey_${ASC_KEY_ID}.p8 \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            archive | xcbeautify || exit ${PIPESTATUS[0]}
+      - name: Export & upload to App Store Connect
+        if: ${{ inputs.upload }}
+        run: |
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist ci/ExportOptions.plist -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates -authenticationKeyPath ~/private_keys/AuthKey_${ASC_KEY_ID}.p8 \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+      - name: Remove key
+        if: always()
+        run: rm -rf ~/private_keys
