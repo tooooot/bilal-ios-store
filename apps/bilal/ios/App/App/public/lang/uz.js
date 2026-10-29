@@ -37,5 +37,5 @@ p:["$1 daqiqa","$1 daqiqa","Azonlar toʻgʻri ishlashi uchun yana $1 ta ruxsat q
 f:["Muharram","Safar","Rabiul avval","Rabiul oxir","Jumodul avval","Jumodul oxir","Rajab","Shaʼbon","Ramazon","Shavvol","Zulqaʼda","Zulhijja",
 "Makka","Madina","Ar-Riyod","Jidda","Dammom","Toif","Abha","Tabuk","Buraydo","Hoyil","Jozon","Najron","Rabig","Yanbuʼ","Al-Jawf","Al-Boha","Al-Ahsoʼ","Qohira","Dubay","Quvayt","Doha","Ammon","Istanbul","Kuala-Lumpur","London",
 "Muazzin 1","Muazzin 2","Yakuniy takbir","Shimoli-sharq","Janubi-sharq","Janubi-gʻarb","Shimoli-gʻarb","Shimol","Sharq","Janub","Gʻarb",
-"Muslim dunyosi ligasi","Misr Umumiy Oʻlchov Boshqarmasi","Karachi Islom Fanlari Universiteti","Umm al-Qura (Makka)","Hilol Kuzatuv Qoʻmitasi","Shimoliy Amerika","Qatar","Singapur / Bruney","JAKIM (Malayziya)","Diniy ishlar vazirligi (Indoneziya)","Tehron universiteti","Diyanet (Turkiya)"],
+"Muslim dunyosi ligasi","Misr Umumiy Oʻlchov Boshqarmasi","Karachi Islom Fanlari Universiteti","Umm al-Qura (Makka)","Hilol Kuzatuv Qoʻmitasi","Shimoliy Amerika","Qatar","Singapur / Bruney","JAKIM (Malayziya)","Diniy ishlar vazirligi (Indoneziya)","Tehron universiteti","Diyanet (Turkiya)","Avqof vazirligi (Iordaniya)"],
 ui:{now:"{n} vaqti boʻldi",close:"Yopish",test:"Azon sinovi",open:"Azon ekranini ochish uchun bosing",hint:"Azonni tugatish uchun Yopish tugmasini bosing"}};

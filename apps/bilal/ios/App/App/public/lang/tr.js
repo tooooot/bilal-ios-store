@@ -37,5 +37,5 @@ p:["$1 dk","$1 dk","Ezanların düzgün çalışması için $1 izin kaldı.","Ge
 f:["Muharrem","Safer","Rebiülevvel","Rebiülahir","Cemaziyelevvel","Cemaziyelahir","Recep","Şaban","Ramazan","Şevval","Zilkade","Zilhicce",
 "Mekke","Medine","Riyad","Cidde","Dammam","Taif","Abha","Tebük","Büreyde","Hayil","Cizan","Necran","Rabiğ","Yenbu","Cevf","Bâha","Ahsa","Kahire","Dubai","Kuveyt","Doha","Amman","İstanbul","Kuala Lumpur","Londra",
 "Müezzin 1","Müezzin 2","Kapanış tekbiri","Kuzeydoğu","Güneydoğu","Güneybatı","Kuzeybatı","Kuzey","Doğu","Güney","Batı",
-"Müslüman Dünya Birliği","Mısır Genel Ölçme Kurumu","Karaçi İslami Bilimler Üniversitesi","Ümmü'l-Kurâ (Mekke)","Hilal Gözlem Komitesi","Kuzey Amerika","Katar","Singapur / Brunei","JAKIM (Malezya)","Din İşleri Bakanlığı (Endonezya)","Tahran Üniversitesi","Diyanet (Türkiye)"],
+"Müslüman Dünya Birliği","Mısır Genel Ölçme Kurumu","Karaçi İslami Bilimler Üniversitesi","Ümmü'l-Kurâ (Mekke)","Hilal Gözlem Komitesi","Kuzey Amerika","Katar","Singapur / Brunei","JAKIM (Malezya)","Din İşleri Bakanlığı (Endonezya)","Tahran Üniversitesi","Diyanet (Türkiye)","Evkaf Bakanlığı (Ürdün)"],
 ui:{now:"{n} vakti geldi",close:"Kapat",test:"Ezan testi",open:"Ezan ekranını açmak için dokunun",hint:"Ezanı bitirmek için Kapat'a dokunun"}};

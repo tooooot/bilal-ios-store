@@ -37,5 +37,5 @@ p:["$1 minit","$1 minit","Tinggal $1 kebenaran lagi supaya azan berfungsi dengan
 f:["Muharam","Safar","Rabiulawal","Rabiulakhir","Jamadilawal","Jamadilakhir","Rejab","Syaaban","Ramadan","Syawal","Zulkaedah","Zulhijah",
 "Makkah","Madinah","Riyadh","Jeddah","Dammam","Taif","Abha","Tabuk","Buraydah","Hail","Jazan","Najran","Rabigh","Yanbu","Al-Jouf","Al-Baha","Al-Ahsa","Kaherah","Dubai","Kuwait","Doha","Amman","Istanbul","Kuala Lumpur","London",
 "Muazin 1","Muazin 2","Takbir penutup","Timur laut","Tenggara","Barat daya","Barat laut","Utara","Timur","Selatan","Barat",
-"Liga Dunia Islam","Pihak Berkuasa Am Ukur Mesir","Universiti Sains Islam Karachi","Umm al-Qura (Makkah)","Jawatankuasa Cerapan Anak Bulan","Amerika Utara","Qatar","Singapura / Brunei","JAKIM (Malaysia)","Kementerian Agama (Indonesia)","Universiti Tehran","Diyanet (Turkiye)"],
+"Liga Dunia Islam","Pihak Berkuasa Am Ukur Mesir","Universiti Sains Islam Karachi","Umm al-Qura (Makkah)","Jawatankuasa Cerapan Anak Bulan","Amerika Utara","Qatar","Singapura / Brunei","JAKIM (Malaysia)","Kementerian Agama (Indonesia)","Universiti Tehran","Diyanet (Turkiye)","Kementerian Wakaf (Jordan)"],
 ui:{now:"Tiba waktu {n}",close:"Tutup",test:"Ujian azan",open:"Ketik untuk membuka skrin azan",hint:"Ketik Tutup untuk menamatkan azan"}};

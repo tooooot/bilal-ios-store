@@ -37,5 +37,5 @@ p:["$1 deqe","$1 deqe","$1 destûr mane da ku ezan rast bixebitin.","Remezana p�
 f:["Mihrem","Sefer","Rebîulewel","Rebîulaxir","Cemazîyulewel","Cemazîyulaxir","Recep","Şaban","Remezan","Şewwal","Zilqede","Zilhicce",
 "Mekke","Medîne","Riyad","Cidde","Dammam","Taîf","Ebha","Tebûk","Bureyde","Haîl","Cîzan","Necran","Rabix","Yenbû","El-Cewf","El-Beha","El-Ehsa","Qahîre","Dubai","Kuweyt","Dohe","Emman","Stenbol","Kuala Lumpur","Londra",
 "Mueddîn 1","Mueddîn 2","Tekbîra dawîn","Bakurrojhilat","Başûrrojhilat","Başûrrojava","Bakurrojava","Bakur","Rojhilat","Başûr","Rojava",
-"Lîga Cîhana Îslamî","Rayedariya Giştî ya Pîvandinê ya Misrê","Zanîngeha Zanistên Îslamî ya Karaçî","Umm al-Qura (Mekke)","Komîteya Dîtina Hîvê","Amerîkaya Bakur","Qeter","Singapûr / Brûney","JAKIM (Malezya)","Wezareta Karên Olî (Endonezya)","Zanîngeha Tehranê","Diyanet (Tirkiye)"],
+"Lîga Cîhana Îslamî","Rayedariya Giştî ya Pîvandinê ya Misrê","Zanîngeha Zanistên Îslamî ya Karaçî","Umm al-Qura (Mekke)","Komîteya Dîtina Hîvê","Amerîkaya Bakur","Qeter","Singapûr / Brûney","JAKIM (Malezya)","Wezareta Karên Olî (Endonezya)","Zanîngeha Tehranê","Diyanet (Tirkiye)","Wezareta Awqafê (Urdun)"],
 ui:{now:"Dema {n} hat",close:"Bigire",test:"Ceribandina ezanê",open:"Ji bo vekirina ekrana ezanê bitikîne",hint:"Ji bo qedandina ezanê Bigire bitikîne"}};

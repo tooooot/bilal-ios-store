@@ -218,6 +218,7 @@ const F=[
 ['جاكيم (ماليزيا)','JAKIM (Malaysia)','جاکِم (ملائیشیا)','জাকিম (মালয়েশিয়া)','JAKIM (Malaysia)','JAKIM (Malaysia)','जाकिम (मलेशिया)'],
 ['وزارة الشؤون الدينية (إندونيسيا)','Ministry of Religious Affairs (Indonesia)','وزارتِ مذہبی امور (انڈونیشیا)','ধর্ম মন্ত্রণালয় (ইন্দোনেশিয়া)','Kementerian Agama (Indonesia)','Ministry of Religious Affairs (Indonesia)','धार्मिक मामलों का मंत्रालय (इंडोनेशिया)'],
 ['جامعة طهران','University of Tehran','جامعہ تہران','তেহরান বিশ্ববিদ্যালয়','Universitas Teheran','University of Tehran','तेहरान विश्वविद्यालय'],['ديانت تركيا','Diyanet (Turkey)','دیانت ترکی','দিয়ানেত (তুরস্ক)','Diyanet (Turki)','Diyanet (Turkey)','दियानत (तुर्की)'],
+['وزارة الأوقاف (الأردن)','Ministry of Awqaf (Jordan)','وزارتِ اوقاف (اردن)','আওকাফ মন্ত্রণালয় (জর্ডান)','Kementerian Wakaf (Yordania)','Ministry of Awqaf (Jordan)','वक़्फ़ मंत्रालय (जॉर्डन)'],
 ];
 // نصوص الإشعار وشاشة الأذان الأصلية (جافا) — {n} = اسم الصلاة
 const UI={ar:{now:'حان وقت {n}',close:'إغلاق',test:'تجربة الأذان',open:'اضغط لفتح شاشة الأذان',hint:'اضغط إغلاق لإنهاء الأذان'},

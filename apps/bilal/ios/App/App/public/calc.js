@@ -4,17 +4,19 @@
   else root.BilalCalc = factory(root.adhan);
 })(typeof self !== 'undefined' ? self : this, function (adhan) {
   const KEYS = {mwl:'MuslimWorldLeague', egypt:'Egyptian', karachi:'Karachi', makkah:'UmmAlQura', dubai:'Dubai', moonsighting:'MoonsightingCommittee',
-    isna:'NorthAmerica', kuwait:'Kuwait', qatar:'Qatar', singapore:'Singapore', tehran:'Tehran', turkey:'Turkey', jakim:'Other', kemenag:'Other'};
+    isna:'NorthAmerica', kuwait:'Kuwait', qatar:'Qatar', singapore:'Singapore', tehran:'Tehran', turkey:'Turkey', jakim:'Other', kemenag:'Other', jordan:'Other'};
   // طرق مضبوطة على جداول الجهات الرسمية (زوايا + احتياط بالدقائق لكل صلاة، تقريب لأقرب دقيقة): قيس خطؤها على بياناتها (انظر CONSTITUTION)
   const CUSTOM = {
     jakim:   {fa:17.5, ia:18, adj:{fajr:-0.5, sunrise:-0.5, dhuhr:2.5, asr:1.5, maghrib:1.5, isha:1.5}},   // JAKIM ماليزيا (متوسط 4 مناطق 2026)
     kemenag: {fa:20,   ia:18, adj:{fajr:2.5,  sunrise:-3,   dhuhr:3.5, asr:2.5, maghrib:3,   isha:2.5}},   // وزارة الشؤون الدينية إندونيسيا (5 مدن 2026)
+    dubai:   {fa:18,   ia:18, adj:{fajr:-1,   sunrise:-3.5, dhuhr:3,   asr:1,   maghrib:3.5, isha:1}},     // الإمارات (دبي وأبوظبي، عيّنة سنة من الجهات الرسمية عبر وسيط)
+    jordan:  {fa:18,   ia:18, adj:{fajr:0.5,  sunrise:-5.5, dhuhr:1.5, asr:1.5, maghrib:7.5, isha:1.5}},   // وزارة الأوقاف الأردنية (عمّان، عيّنة سنة عبر وسيط)
     turkey:  {fa:18,   ia:16, adj:{fajr:0,    sunrise:-7,   dhuhr:5,   asr:5,   maghrib:7.5, isha:6}}      // ديانت تركيا (4 مدن، شهر واحد فقط — يُعاد ضبطها)
   };
   const LABEL = {mwl:'رابطة العالم الإسلامي', egypt:'الهيئة المصرية العامة للمساحة', karachi:'جامعة العلوم الإسلامية بكراتشي', makkah:'أم القرى (مكة المكرمة)',
     dubai:'دبي', moonsighting:'لجنة رؤية الهلال', isna:'أمريكا الشمالية (ISNA)', kuwait:'الكويت', qatar:'قطر', singapore:'سنغافورة / بروناي',
-    tehran:'جامعة طهران', turkey:'ديانت تركيا', jakim:'جاكيم (ماليزيا)', kemenag:'وزارة الشؤون الدينية (إندونيسيا)'};
-  const TZ = {'Asia/Riyadh':'makkah','Asia/Kuwait':'kuwait','Asia/Qatar':'qatar','Asia/Dubai':'dubai','Africa/Cairo':'egypt','Europe/Istanbul':'turkey',
+    tehran:'جامعة طهران', turkey:'ديانت تركيا', jakim:'جاكيم (ماليزيا)', kemenag:'وزارة الشؤون الدينية (إندونيسيا)', jordan:'وزارة الأوقاف (الأردن)'};
+  const TZ = {'Asia/Riyadh':'makkah','Asia/Kuwait':'kuwait','Asia/Qatar':'qatar','Asia/Dubai':'dubai','Asia/Amman':'jordan','Africa/Cairo':'egypt','Europe/Istanbul':'turkey',
     'Asia/Karachi':'karachi','Asia/Kolkata':'karachi','Asia/Calcutta':'karachi','Asia/Dhaka':'karachi','Asia/Singapore':'singapore','Asia/Kuala_Lumpur':'jakim','Asia/Kuching':'jakim',
     'Asia/Jakarta':'kemenag','Asia/Makassar':'kemenag','Asia/Pontianak':'kemenag','Asia/Jayapura':'kemenag','Asia/Brunei':'singapore','Asia/Tehran':'tehran','Pacific/Honolulu':'isna'};
   /** الطريقة الافتراضية بحسب منطقة الجهاز الزمنية — يستطيع المستخدم تغييرها دائماً */

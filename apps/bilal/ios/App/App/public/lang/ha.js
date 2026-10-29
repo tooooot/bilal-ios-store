@@ -37,5 +37,5 @@ p:["Minti $1","Minti $1","Saura izini $1 don kiran sallah ya yi aiki yadda ya ka
 f:["Muharram","Safar","Rabi'ul Awwal","Rabi'ul Thani","Jumada al-Ula","Jumada al-Akhira","Rajab","Sha'aban","Ramadan","Shawwal","Zulƙa'ida","Zulhijja",
 "Makka","Madina","Riyadh","Jidda","Dammam","Ta'if","Abha","Tabuk","Buraydah","Hail","Jazan","Najran","Rabigh","Yanbu","Al-Jouf","Al-Baha","Al-Ahsa","Alƙahira","Dubai","Kuwait","Doha","Amman","Istanbul","Kuala Lumpur","Landan",
 "Mai kira 1","Mai kira 2","Takbir na ƙarshe","Arewa maso gabas","Kudu maso gabas","Kudu maso yamma","Arewa maso yamma","Arewa","Gabas","Kudu","Yamma",
-"Ƙungiyar Musulmi ta Duniya","Hukumar Auna Ƙasa ta Masar","Jami'ar Kimiyyar Musulunci ta Karachi","Umm al-Qura (Makka)","Kwamitin Duban Wata","Amurka ta Arewa","Qatar","Singapore / Brunei","JAKIM (Malaysia)","Ma'aikatar Harkokin Addini (Indonesia)","Jami'ar Tehran","Diyanet (Turkiyya)"],
+"Ƙungiyar Musulmi ta Duniya","Hukumar Auna Ƙasa ta Masar","Jami'ar Kimiyyar Musulunci ta Karachi","Umm al-Qura (Makka)","Kwamitin Duban Wata","Amurka ta Arewa","Qatar","Singapore / Brunei","JAKIM (Malaysia)","Ma'aikatar Harkokin Addini (Indonesia)","Jami'ar Tehran","Diyanet (Turkiyya)","Ma’aikatar Awqaf (Jordan)"],
 ui:{now:"Lokacin {n} ya yi",close:"Rufe",test:"Gwajin kiran sallah",open:"Taɓa don buɗe allon kiran sallah",hint:"Taɓa Rufe don kawo ƙarshen kiran sallah"}};
